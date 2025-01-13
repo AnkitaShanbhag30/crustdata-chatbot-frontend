@@ -26,6 +26,8 @@
               "What are the supported file formats for data upload?": "The Crustdata API supports CSV, JSON, and Parquet formats for data uploads."
           };
 
+          const backendUrl = 'https://crustdata-backend-6f6dd1115e03.herokuapp.com'; // Define your backend URL here
+
           async function sendMessage() {
               const userInput = document.getElementById("user-input").value.trim();
               if (!userInput) return;
@@ -33,9 +35,7 @@
               const chatLog = document.getElementById("chat-log");
               chatLog.innerHTML += `<div class='chat-message user-message'>You: ${userInput}</div>`;
               document.getElementById("user-input").value = "";
-
               try {
-                  const backendUrl = process.env.BACKEND_URL || 'http://127.0.0.1:5000';
                   const response = await fetch(`${backendUrl}/chat`, {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
