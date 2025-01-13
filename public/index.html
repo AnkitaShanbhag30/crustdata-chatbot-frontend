@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crustdata Support Chatbot</title>
-    <style>
-        .chat-box { max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 10px; }
-        .chat-log { height: 300px; overflow-y: auto; border-bottom: 1px solid #ddd; }
-        .chat-message { margin: 10px 0; }
-        .user-message { font-weight: bold; }
-        .bot-message { color: #0078D7; }
-    </style>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
       <div class="chat-box">
-          <h3>Crustdata API Support Chat</h3>
+          <div class="chat-header">
+              Crustdata API Support Chat
+          </div>
           <div id="chat-log" class="chat-log"></div>
-          <input id="user-input" type="text" placeholder="Ask a question..." />
-          <button onclick="sendMessage()">Send</button>
+          <div class="chat-input">
+              <input id="user-input" type="text" placeholder="Ask a question..." />
+              <button id="send-button" onclick="sendMessage()">Send</button>
+          </div>
       </div>
       <script>
           const faq = {
@@ -35,6 +33,7 @@
               const chatLog = document.getElementById("chat-log");
               chatLog.innerHTML += `<div class='chat-message user-message'>You: ${userInput}</div>`;
               document.getElementById("user-input").value = "";
+              console.log("Backend URL: ", backendUrl);
               try {
                   const response = await fetch(`${backendUrl}/chat`, {
                       method: 'POST',
@@ -49,7 +48,6 @@
 
               chatLog.scrollTop = chatLog.scrollHeight; // Auto-scroll to the bottom
           }
-
       </script>
   </body>
 </html>
