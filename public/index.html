@@ -24,8 +24,9 @@
               "How can I authenticate with the Crustdata API?": "You can authenticate using an API key. Simply pass it as a bearer token in the request header.",
               "What are the supported file formats for data upload?": "The Crustdata API supports CSV, JSON, and Parquet formats for data uploads."
           };
+
           const backendUrl = 'https://crustdata-backend-6f6dd1115e03.herokuapp.com'; // Comment this out in local development
-        //   const backendUrl = 'http://192.168.1.72:8000'; // Comment this out in deployment
+          // const backendUrl = 'http://192.168.1.72:8000'; // Comment this out in deployment
 
           document.getElementById("user-input").addEventListener("keypress", function(event) {
               if (event.key === "Enter") {
@@ -49,17 +50,24 @@
                   });
                   const data = await response.json();
                   
-                  // Configure marked options
-                  marked.setOptions({
-                    highlight: function(code, lang) {
-                      return code;
-                    },
-                    breaks: true
-                  });
+                  // Log the response for debugging
+                  console.log(data);
 
-                  // Convert markdown to HTML
-                  const formattedAnswer = marked.parse(data.answer);
-                  chatLog.innerHTML += `<div class='chat-message bot-message'>Bot: ${formattedAnswer}</div>`;
+                  if (data.answer) {
+                      // Configure marked options
+                      marked.setOptions({
+                          highlight: function(code, lang) {
+                              return code;
+                          },
+                          breaks: true
+                      });
+
+                      // Convert markdown to HTML
+                      const formattedAnswer = marked.parse(data.answer);
+                      chatLog.innerHTML += `<div class='chat-message bot-message'>Bot: ${formattedAnswer}</div>`;
+                  } else {
+                      chatLog.innerHTML += `<div class='chat-message bot-message'>Bot: No answer received.</div>`;
+                  }
               } catch (error) {
                   chatLog.innerHTML += `<div class='chat-message bot-message'>Bot: An error occurred. Please try again later. Error: ${error.message}</div>`;
               }
